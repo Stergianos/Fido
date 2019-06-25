@@ -783,8 +783,6 @@ namespace Fido_Main.Director.Scoring
             // ReSharper disable once UnusedVariable for used variable in foreach loop
             foreach (var sNewType in lMalwareTypes.Select(sType => sType.ToLower() == "c and c" ? "c&c" : sType).Where(sNewType => String.Equals(sNewType, lAlienVaultReturnValues.Activity, StringComparison.CurrentCultureIgnoreCase)))
             {
-
-
                 if (lAlienVaultReturnValues.Reliability > iReliabilityScoreHigh)
                 {                
                     ScoreReliability(iReliabilityWeightHigh);                  
