@@ -23,10 +23,21 @@ using Fido_Main.Fido_Support.Objects.Fido;
 
 namespace Fido_Main.Notification.Notification_Helper
 {
+
+    public class ProtectWiseBadGuyParams
+    {
+        public FidoReturnValues fidoReturnValues { get; set; }
+        public List<string> lBadMD5Hashes { get; set; }
+        public List<string> lGoodMD5Hashes { get; set; }
+        public List<string> lBadURLs { get; set; }
+        public List<string> lGoodURLs { get; set; }
+        public Dictionary<string, string> replacements { get; set; }
+
+    }
   static class Notfication_ProtectWise_Helper
   {
 
-    public static Dictionary<string, string> ProtectWiseBadGuyReturn(FidoReturnValues lFidoReturnValues, List<string> lBadMD5Hashes, List<string> lGoodMD5Hashes, List<string> lBadURLs, List<string> lGoodURLs, Dictionary<string, string> replacements)
+    public static Dictionary<string, string> ProtectWiseBadGuyReturn(ProtectWiseBadGuyParams parameters)
     {
       if (lFidoReturnValues.ProtectWise.VirusTotal != null)
       {

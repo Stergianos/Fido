@@ -1027,8 +1027,15 @@ namespace Fido_Main.Director.Scoring
       }
       return lFidoReturnValues;
     }
-
-    private static FidoReturnValues AntiVirusTrojanReturnScore(FidoReturnValues lFidoReturnValues, int iTrojanWeight, int iTrojanMultiplier, int iRegularWeight, int iRegularMultiplier)
+        public class AntivirusParams
+        {
+            public FidoReturnValues lFidoReturnValues { get; set; }
+            public int iTrojanWeight { get; set; }
+            public int iTrojanMultiplier { get; set; }
+            public int iRegularWeight { get; set; }
+            public int iRegularMultiplier { get; set; }
+        }
+    private static FidoReturnValues AntiVirusTrojanReturnScore(AntivirusParams parameters)
     {
       switch (lFidoReturnValues.Antivirus.ActionTaken.ToLower())
       {

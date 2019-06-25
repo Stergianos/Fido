@@ -32,6 +32,7 @@ namespace Fido_Main.Notification
 {
   static class Notification
   {
+
     //module to compose notifications
     public static void Notify (FidoReturnValues lFidoReturnValues)
     {
