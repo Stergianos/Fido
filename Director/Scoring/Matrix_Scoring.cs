@@ -780,59 +780,45 @@ namespace Fido_Main.Director.Scoring
       var iReliabilityWeightLow = Object_Fido_Configs.GetAsInt("fido.securityfeed.alienvault.reliabilityweightlow", 0);
       var iScore = 0;
 
-      // ReSharper disable once UnusedVariable for used variable in foreach loop
-      foreach (var sNewType in lMalwareTypes.Select(sType => sType.ToLower() == "c and c" ? "c&c" : sType).Where(sNewType => String.Equals(sNewType, lAlienVaultReturnValues.Activity, StringComparison.CurrentCultureIgnoreCase)))
-      {
-        if (lAlienVaultReturnValues.Reliability > iReliabilityScoreHigh)
-        {
-          if (lAlienVaultReturnValues.Risk > iRiskScoreHigh)
-          {
-            iScore = iRiskWeightHigh * iReliabilityWeightHigh;
-          }
-          else if (lAlienVaultReturnValues.Risk > iRiskScoreMedium)
-          {
-            iScore = iRiskWeightMedium * iReliabilityWeightHigh;
-          }
-          else if (lAlienVaultReturnValues.Risk < iRiskScoreLow)
-          {
-            iScore = iRiskWeightLow * iReliabilityWeightHigh;
-          }
-        }
-        else if (lAlienVaultReturnValues.Reliability > iReliabilityScoreMedium)
-        {
-          if (lAlienVaultReturnValues.Risk > iRiskScoreHigh)
-          {
-            iScore = iRiskWeightHigh * iReliabilityWeightMedium;
-          }
-          else if (lAlienVaultReturnValues.Risk > iRiskScoreMedium)
-          {
-            iScore = iRiskWeightMedium * iReliabilityWeightMedium;
-          }
-          else if (lAlienVaultReturnValues.Risk < iRiskScoreLow)
-          {
-            iScore = iRiskWeightLow * iReliabilityWeightMedium;
-          }
-        }
-        else if (lAlienVaultReturnValues.Reliability < iReliabilityScoreLow)
-        {
-          if (lAlienVaultReturnValues.Risk > iRiskScoreHigh)
-          {
-            iScore = iRiskWeightHigh * iReliabilityWeightLow;
-          }
-          else if (lAlienVaultReturnValues.Risk > iRiskScoreMedium)
-          {
-            iScore = iRiskWeightMedium * iReliabilityWeightLow;
-          }
-          else if (lAlienVaultReturnValues.Risk < iRiskScoreLow)
-          {
-            iScore = iRiskWeightLow * iReliabilityWeightLow;
-          }
-        }
-      }
-      return iScore;
-    }
+            // ReSharper disable once UnusedVariable for used variable in foreach loop
+            foreach (var sNewType in lMalwareTypes.Select(sType => sType.ToLower() == "c and c" ? "c&c" : sType).Where(sNewType => String.Equals(sNewType, lAlienVaultReturnValues.Activity, StringComparison.CurrentCultureIgnoreCase)))
+            {
 
-    public static FidoReturnValues GetUserScore(FidoReturnValues lFidoReturnValues)
+
+                if (lAlienVaultReturnValues.Reliability > iReliabilityScoreHigh)
+                {                
+                    ScoreReliability(iReliabilityWeightHigh);                  
+                }
+                else if (lAlienVaultReturnValues.Reliability > iReliabilityScoreMedium)
+                {
+                    ScoreReliability(iReliabilityWeightMedium);
+                }
+                else if (lAlienVaultReturnValues.Reliability < iReliabilityScoreLow)
+                {
+                    ScoreReliability(iReliabilityWeightLow);
+                }
+            }
+            return iScore;
+        }
+
+        public static int ScoreReliability(int IReliabilityWeight)
+        {
+            if (lAlienVaultReturnValues.Risk > iRiskScoreHigh)
+            {
+                iScore = iRiskWeightHigh * IReliabilityWeight;
+            }
+            else if (lAlienVaultReturnValues.Risk > iRiskScoreMedium)
+            {
+                iScore = iRiskWeightMedium * IReliabilityWeight;
+            }
+            else if (lAlienVaultReturnValues.Risk < iRiskScoreLow)
+            {
+                iScore = iRiskWeightLow * IReliabilityWeight;
+            }
+            
+        }
+
+        public static FidoReturnValues GetUserScore(FidoReturnValues lFidoReturnValues)
     {
       var sUserTitles = Object_Fido_Configs.GetAsString("fido.posture.user.titles", null);
       var sUserDepartment = Object_Fido_Configs.GetAsString("fido.posture.user.department", null);
